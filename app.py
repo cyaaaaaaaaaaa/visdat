@@ -912,7 +912,7 @@ with tab_macro:
                     cmax=max_ihk,
                     opacity=0.88,
                     showscale=True,
-                    line=dict(color="#FDF5EC", width=1.6),
+                    # line=dict(color="#FDF5EC", width=1.6),  <--- HAPUS BARIS INI
                     colorbar=dict(
                         title=dict(
                             text="<b>IHK 2025</b><br><span style='font-size:10px;color:#E8908A;'>Ukuran & Warna</span>",
@@ -958,8 +958,8 @@ with tab_macro:
                     textfont=dict(family="Plus Jakarta Sans", size=13, color="#F5D6A8"),
                     marker=dict(
                         size=sel_size + 14,
-                        color="rgba(245, 214, 168, 0.25)",
-                        line=dict(color="#F5D6A8", width=3.0)
+                        color="rgba(245, 214, 168, 0.25)"
+                        # line=dict(color="#F5D6A8", width=3.0) <--- HAPUS BARIS INI JUGA
                     ),
                     hoverinfo='text',
                     hovertext=[f"<b>{selected_prov} (Provinsi Sorotan)</b><br>Rata-rata IHK 2025: <b>{sel_val:.2f}</b><br>Selisih thd Nasional: <b>{diff_str}</b>"],
