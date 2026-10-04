@@ -403,7 +403,7 @@ st.markdown(f"""
 
 # ==============================================================================
 # 2. DEFINISI PALET WARNA CHART PLOTLY
-# ==============================================================================
+# =============================================================================
 CHART_COLORWAY = ['#E8908A', '#F5D6A8', '#A82C3E', '#7A2332', '#DDA07F', '#C97282']
 
 # Skala warna kontinyu untuk Peta, Heatmap, Sunburst, Treemap (Kontras Tajam Mengikuti Sebaran IHK)
