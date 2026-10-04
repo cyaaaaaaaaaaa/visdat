@@ -45,11 +45,7 @@ h1, h2, h3, h4, h5, .brand-title {
     letter-spacing: -0.02em;
 }
 
-/* 1. Menyembunyikan header default Streamlit */
-header, [data-testid="stHeader"] {
-    visibility: hidden !important;
-    height: 0px !important;
-}
+
 
 /* Main Page Background */
 .stApp {
