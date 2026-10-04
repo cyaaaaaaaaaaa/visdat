@@ -377,53 +377,48 @@ div[data-baseweb="tab-highlight"] {
     font-weight: 600;
 }
 
-/* ==============================================================================
-   RESPONSIVITAS UNTUK LAYAR HP (MOBILE-FRIENDLY DEVICES)
-   ============================================================================== */
-@media screen and (max-width: 768px) {
-    /* Menyesuaikan padding utama agar tidak memakan ruang di layar kecil */
-    div.block-container, .main .block-container, [data-testid="stMainBlockContainer"] {
-        padding-top: 7rem !important; /* Memberi ruang lebih untuk header yang menumpuk di HP */
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
+    /* ==============================================================================
+       RESPONSIVITAS UNTUK LAYAR HP (MOBILE-FRIENDLY)
+       ============================================================================== */
+    @media screen and (max-width: 768px) {
+        div.block-container, .main .block-container, [data-testid="stMainBlockContainer"] {
+            padding-top: 7rem !important; 
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        .sticky-stis-header {
+            flex-direction: column;
+            height: auto;
+            padding: 10px 15px 10px 45px; 
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .stis-inst { font-size: 0.75rem; }
+        .stis-sub { font-size: 0.6rem; }
+        .identity-badge { padding: 4px 10px; flex-wrap: wrap; }
+        .badge-item { font-size: 0.7rem; }
+        .kpi-value { font-size: 1.6rem; }
 
-    /* Mengubah susunan Sticky Header menjadi atas-bawah (stacking) */
-    .sticky-stis-header {
-        flex-direction: column;
-        height: auto;
-        padding: 10px 15px 10px 45px; /* Sisakan ruang 45px di kiri untuk tombol sidebar */
-        align-items: flex-start;
-        gap: 8px;
+        /* Memperbaiki Tab Navigasi agar tidak nabrak dan bisa di-scroll */
+        div[data-testid="stTabs"] [role="tablist"] {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            justify-content: flex-start !important;
+            padding-bottom: 8px !important;
+            gap: 5px !important;
+        }
+        div[data-testid="stTabs"] button[data-baseweb="tab"] {
+            flex: 0 0 auto !important; 
+            width: auto !important;
+            min-width: max-content !important; 
+            white-space: nowrap !important; 
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            font-size: 0.9rem !important; 
+        }
     }
-
-    /* Memperkecil teks di header agar tidak bertabrakan */
-    .stis-inst { font-size: 0.75rem; }
-    .stis-sub { font-size: 0.6rem; }
-    
-    .identity-badge {
-        padding: 4px 10px;
-        flex-wrap: wrap;
-    }
-    .badge-item { font-size: 0.7rem; }
-
-    /* Memperkecil ukuran font pada KPI Card */
-    .kpi-value { font-size: 1.6rem; }
-
-    /* Memastikan Tab Navigasi bisa digeser ke kanan-kiri (scrollable) di HP */
-    div[data-testid="stTabs"] [role="tablist"] {
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
-        justify-content: flex-start !important;
-        padding-bottom: 5px;
-    }
-    
-    div[data-testid="stTabs"] button[data-baseweb="tab"] {
-        flex: 0 0 auto !important;
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-}
 </style>""", unsafe_allow_html=True)
 
 # Render Sticky STIS Header (Menetap di bagian atas saat di-scroll)
@@ -1593,60 +1588,53 @@ with tab_net:
 with tab_hier:
     # Breadcrumb Navigation (Full Width)
     st.html(f'''<div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); border-radius: 12px; padding: 14px 22px; font-size: 0.94rem; font-weight: 600; color: #FDF5EC; margin-bottom: 22px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <span>🏠 Indonesia (Root Node)</span>
+        <span>🏠 Indonesia (Nasional)</span>
         <span style="opacity: 0.5;">➔</span>
-        <span style="color: #F5D6A8;">📍 {selected_prov}</span>
+        <span style="color: #F5D6A8;">📍 {selected_prov} (Provinsi Sorotan)</span>
         <span style="opacity: 0.5;">➔</span>
         <span style="color: #E8908A;">🏷️ 11 Kelompok Pengeluaran</span>
         <span style="opacity: 0.5;">➔</span>
         <span style="color: #FDF5EC;">📦 38 Subkelompok Komoditas</span>
     </div>''')
     
-    hier_scope = st.radio(
-        "Pilih Lingkup Analisis Hierarki:",
-        options=[f"Fokus Provinsi: {selected_prov}", "Agregat Seluruh Indonesia (38 Provinsi)"],
-        horizontal=True
-    )
+    # Poin Perbaikan 1: Dua visualisasi Sunburst yang terpisah (Nasional & Provinsi)
+    # Dataset 1: Sunburst Nasional (Root statis: 'Indonesia', path=['Root', 'Kelompok', 'Subkelompok'])
+    df_nasional = df_hier.groupby(['Kelompok', 'Subkelompok'], as_index=False).agg({
+        'IHK_RataRata_2025': 'mean',
+        'Bobot_Pengeluaran': 'first'
+    })
+    df_nasional['Root'] = 'Indonesia'
     
-    # Poin Perbaikan 1: Struktur Hierarki 3 Level (Indonesia -> Kelompok -> Subkelompok)
-    # Parameter ukuran (values) menggunakan 'Bobot_Pengeluaran' (Diagram Timbang %)
-    # Parameter warna (color) menggunakan 'IHK_RataRata_2025' (dua variabel numerik berbeda)
-    if hier_scope.startswith("Fokus Provinsi"):
-        df_hier_filt = df_hier[df_hier['Provinsi'] == selected_prov].copy()
-    else:
-        df_hier_filt = df_hier.groupby(['Indonesia', 'Kelompok', 'Subkelompok'], as_index=False).agg({
-            'IHK_RataRata_2025': 'mean',
-            'Bobot_Pengeluaran': 'first'
-        })
-        
-    h_path = ['Indonesia', 'Kelompok', 'Subkelompok']
+    # Dataset 2: Sunburst Provinsi Terpilih (Root dinamis: selected_prov, path=['Root', 'Kelompok', 'Subkelompok'])
+    df_provinsi = df_hier[df_hier['Provinsi'] == selected_prov].copy()
+    df_provinsi['Root'] = selected_prov
 
-    # 1. Sunburst Chart (Full Width)
+    # 1. Sunburst Chart Tingkat Nasional (Root: Indonesia)
     with st.container(border=True):
         render_section_header(
-            "☀️ Sunburst Chart (Struktur Konsentris 3 Level Hierarki IHK)", 
-            "Diagram konsentris 3 level (Indonesia ➔ Kelompok ➔ Subkelompok). Ukuran sektor (values) merepresentasikan Bobot Diagram Timbang Pengeluaran (%), sedangkan warna sektor (color) merepresentasikan Nilai Rata-rata IHK 2025. Klik cincin untuk zoom-in ke rincian komoditas."
+            "☀️ 1. Sunburst Chart IHK Tingkat Nasional (Root: Indonesia)", 
+            "Diagram konsentris 3 level agregat nasional (Indonesia ➔ Kelompok ➔ Subkelompok). Ukuran sektor (values) merepresentasikan Bobot Diagram Timbang Pengeluaran (%), sedangkan warna sektor (color) merepresentasikan Nilai Rata-rata IHK Nasional 2025. Teks selalu berorientasi mendatar (horizontal)."
         )
         
-        fig_sun = px.sunburst(
-            df_hier_filt,
-            path=h_path,
+        fig_sun_nas = px.sunburst(
+            df_nasional,
+            path=['Root', 'Kelompok', 'Subkelompok'],
             values='Bobot_Pengeluaran',
             color='IHK_RataRata_2025',
             color_continuous_scale=SEQUENTIAL_BURGUNDY_GOLD,
             hover_data={'Bobot_Pengeluaran': ':.2f', 'IHK_RataRata_2025': ':.2f'}
         )
-        fig_sun.update_traces(
+        fig_sun_nas.update_traces(
             insidetextorientation='horizontal',
             hovertemplate=(
                 '<b>%{label}</b><br>' +
                 '🏷️ Hierarki Induk: <b>%{parent}</b><br>' +
                 '📦 Bobot Diagram Timbang: <b>%{value:.2f}%</b><br>' +
-                '📈 Rata-rata IHK 2025: <b>%{color:.2f}</b><br>' +
+                '📈 Rata-rata IHK Nasional: <b>%{color:.2f}</b><br>' +
                 '<extra></extra>'
             )
         )
-        fig_sun.update_layout(
+        fig_sun_nas.update_layout(
             height=700,
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
@@ -1659,24 +1647,64 @@ with tab_hier:
             ),
             margin=dict(l=10, r=10, t=10, b=10)
         )
-        st.plotly_chart(fig_sun, use_container_width=True)
-        
-        # Poin Perbaikan 5: Atribusi Sumber Data BPS & Tombol Unduh Data Sunburst
+        st.plotly_chart(fig_sun_nas, use_container_width=True)
         render_source_caption()
-        render_download_button(df_hier_filt, "data_hierarki_sunburst_3level_2025.csv", "📥 Unduh Data Sunburst (CSV)", "dl_sun")
-        
-        render_takeaway("Sunburst Konsentris 3 Level", "Struktur konsentris memperlihatkan bahwa bobot agregat terbesar (~33,7%) dan variasi warna terdalam terkonsentrasi pada cincin Makanan, Minuman & Tembakau, membuktikan pengaruh dominan sektor ini terhadap kerentanan daya beli masyarakat.")
+        render_download_button(df_nasional, "data_sunburst_nasional_3level_2025.csv", "📥 Unduh Data Sunburst Nasional (CSV)", "dl_sun_nas")
+        render_takeaway("Sunburst Nasional", "Pada agregat nasional, sektor Makanan, Minuman & Tembakau mendominasi pangsa konsumsi (~33,7%) dengan rona warna pekat yang mencerminkan tekanan harga bahan makanan pokok di seluruh nusantara.")
 
-    # 2. Treemap Chart (Full Width)
+    # 2. Sunburst Chart Tingkat Provinsi Terpilih (Root: selected_prov)
     with st.container(border=True):
         render_section_header(
-            "🗺️ Treemap Chart (Komposisi Proporsi Spasial 3 Level Hierarki IHK)", 
-            "Hierarki persegi proporsional 3 level (Indonesia ➔ Kelompok ➔ Subkelompok). Luas kotak (values) mencerminkan Bobot Diagram Timbang (%), sedangkan rona warna (color) mencerminkan Nilai IHK 2025. Klik kotak untuk zoom-in ke rincian komoditas."
+            f"☀️ 2. Sunburst Chart IHK Provinsi: {selected_prov} (Root: {selected_prov})", 
+            f"Diagram konsentris 3 level spesifik provinsi (Root: {selected_prov} ➔ Kelompok ➔ Subkelompok). Ukuran sektor (values) merepresentasikan Bobot Diagram Timbang (%), sedangkan warna sektor (color) merepresentasikan IHK 2025 Provinsi {selected_prov}. Teks selalu berorientasi mendatar (horizontal)."
+        )
+        
+        fig_sun_prov = px.sunburst(
+            df_provinsi,
+            path=['Root', 'Kelompok', 'Subkelompok'],
+            values='Bobot_Pengeluaran',
+            color='IHK_RataRata_2025',
+            color_continuous_scale=SEQUENTIAL_BURGUNDY_GOLD,
+            hover_data={'Bobot_Pengeluaran': ':.2f', 'IHK_RataRata_2025': ':.2f'}
+        )
+        fig_sun_prov.update_traces(
+            insidetextorientation='horizontal',
+            hovertemplate=(
+                '<b>%{label}</b><br>' +
+                '🏷️ Hierarki Induk: <b>%{parent}</b><br>' +
+                '📦 Bobot Diagram Timbang: <b>%{value:.2f}%</b><br>' +
+                f'📈 IHK 2025 ({selected_prov}): <b>%{{color:.2f}}</b><br>' +
+                '<extra></extra>'
+            )
+        )
+        fig_sun_prov.update_layout(
+            height=700,
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#FDF5EC", family="Inter"),
+            coloraxis_colorbar=dict(
+                title=dict(text="<b>IHK 2025</b>", font=dict(color="#FDF5EC", size=12)),
+                tickfont=dict(color="#FDF5EC"),
+                thickness=16,
+                len=0.75
+            ),
+            margin=dict(l=10, r=10, t=10, b=10)
+        )
+        st.plotly_chart(fig_sun_prov, use_container_width=True)
+        render_source_caption()
+        render_download_button(df_provinsi, f"data_sunburst_{selected_prov.lower().replace(' ', '_')}_2025.csv", f"📥 Unduh Data Sunburst {selected_prov} (CSV)", "dl_sun_prov")
+        render_takeaway(f"Sunburst {selected_prov}", f"Struktur konsentris {selected_prov} memperlihatkan variasi harga spesifik daerah. Subkelompok dengan warna crimson paling kontras mengindikasikan komoditas pemicu inflasi lokal utama di {selected_prov}.")
+
+    # 3. Treemap Chart (Komposisi Proporsi Spasial 3 Level)
+    with st.container(border=True):
+        render_section_header(
+            f"🗺️ 3. Treemap Chart (Komposisi Proporsi Spasial 3 Level Hierarki IHK: {selected_prov})", 
+            f"Hierarki persegi proporsional 3 level (Root: {selected_prov} ➔ Kelompok ➔ Subkelompok). Luas kotak (values) mencerminkan Bobot Diagram Timbang (%), sedangkan rona warna (color) mencerminkan Nilai IHK 2025. Klik kotak untuk zoom-in ke rincian komoditas."
         )
         
         fig_tree = px.treemap(
-            df_hier_filt,
-            path=h_path,
+            df_provinsi,
+            path=['Root', 'Kelompok', 'Subkelompok'],
             values='Bobot_Pengeluaran',
             color='IHK_RataRata_2025',
             color_continuous_scale=SEQUENTIAL_BURGUNDY_GOLD,
@@ -1705,14 +1733,11 @@ with tab_hier:
             margin=dict(l=10, r=10, t=10, b=10)
         )
         st.plotly_chart(fig_tree, use_container_width=True)
-        
-        # Poin Perbaikan 5: Atribusi Sumber Data BPS & Tombol Unduh Data Treemap
         render_source_caption()
-        render_download_button(df_hier_filt, "data_hierarki_treemap_3level_2025.csv", "📥 Unduh Data Treemap (CSV)", "dl_tree")
-        
-        render_takeaway("Treemap Proporsi Spasial 3 Level", "Luas area kotak menunjukkan proporsi bobot konsumsi rumah tangga. Komoditas esensial seperti Makanan Pokok (25,2%) dan Energi Rumah Tangga menduduki proporsi ruang terluas dengan rona warna pekat di seluruh provinsi.")
+        render_download_button(df_provinsi, f"data_treemap_{selected_prov.lower().replace(' ', '_')}_2025.csv", "📥 Unduh Data Treemap (CSV)", "dl_tree")
+        render_takeaway("Treemap Proporsi Spasial 3 Level", f"Luas area kotak menunjukkan proporsi bobot konsumsi rumah tangga di {selected_prov}. Komoditas esensial seperti Makanan Pokok (25,2%) dan Energi Rumah Tangga menduduki proporsi ruang terluas dengan rona warna pekat.")
 
-    # 3. Kesimpulan Khusus Sub-Tema: Hierarchical Drill-Down (Full Width Card)
+    # 4. Kesimpulan Khusus Sub-Tema: Hierarchical Drill-Down (Full Width Card)
     render_conclusion_card(
         "💡 Kesimpulan: Hierarchical Drill-Down & Disparitas Subkelompok",
         "Penelusuran akar pembentukan indeks dari level makro ke subkelompok komoditas mikro pada 3 level hierarki",
