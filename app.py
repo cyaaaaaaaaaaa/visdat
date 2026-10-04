@@ -561,7 +561,7 @@ def render_section_header(title, subtitle=""):
 def render_takeaway(title, text):
     """Merender kotak insight/kesimpulan ringkas untuk setiap sub-judul visualisasi."""
     st.html(f'''<div style="background: rgba(255, 255, 255, 0.035); border-left: 3.5px solid #F5D6A8; border-radius: 0 8px 8px 0; padding: 12px 18px; margin-top: 14px; margin-bottom: 6px;">
-        <span style="font-family: \'Plus Jakarta Sans\', sans-serif; font-weight: 700; color: #F5D6A8; font-size: 0.94rem; margin-right: 6px;">📌 Insight Sub-Judul: {title} —</span>
+        <span style="font-family: \'Plus Jakarta Sans\', sans-serif; font-weight: 700; color: #F5D6A8; font-size: 0.94rem; margin-right: 6px;">Insight Sub-Judul: {title} —</span>
         <span style="font-family: \'Inter\', sans-serif; font-size: 0.91rem; color: #FDF5EC; line-height: 1.6;">{text}</span>
     </div>''')
 
@@ -569,7 +569,7 @@ def render_source_caption():
     """Merender atribusi sumber data BPS resmi di bawah setiap visualisasi sesuai rubrik ujian."""
     st.caption("Sumber: Badan Pusat Statistik (BPS) - Indeks Harga Konsumen 2025")
 
-def render_download_button(df, filename, label="📥 Unduh Data (CSV)", key=None):
+def render_download_button(df, filename, label="Unduh Data (CSV)", key=None):
     """Merender tombol unduh CSV di bawah kiri visualisasi dengan styling rapi."""
     csv_bytes = df.to_csv(index=False).encode('utf-8')
     col_dl, col_space = st.columns([1.5, 3.5])
@@ -654,13 +654,13 @@ geojson_data = load_geojson()
 # ==============================================================================
 with st.sidebar:
     st.image("https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/chart-line.svg", width=34)
-    st.markdown("## 🧭 Navigasi & Filter")
+    st.markdown("## Navigasi & Filter")
     st.caption("Pola IHK 38 Provinsi di Indonesia · BPS 2025")
     st.markdown("---")
     
     default_index = all_provinces.index("Sulawesi Selatan") if "Sulawesi Selatan" in all_provinces else 0
     selected_prov = st.selectbox(
-        "🎯 Provinsi Sorotan (Fokus Brushing):",
+        "Provinsi Sorotan (Fokus Brushing):",
         options=all_provinces,
         index=default_index,
         help="Provinsi ini akan otomatis di-highlight pada Peta, Ranking, PCA, Parallel Coordinates, Heatmap, Network, dan Hierarki!"
@@ -668,12 +668,12 @@ with st.sidebar:
     st.session_state['selected_province'] = selected_prov
     
     st.markdown("---")
-    st.markdown("### ⚙️ Parameter Model")
+    st.markdown("### Parameter Model")
     
     n_clusters = st.slider("Jumlah Klaster Pola (K-Means):", min_value=2, max_value=6, value=4, step=1)
     
     network_threshold = st.slider(
-        "🔗 Ambang Batas Network (r):",
+        "Ambang Batas Network (r):",
         min_value=0.50,
         max_value=0.95,
         value=0.80,
@@ -682,7 +682,7 @@ with st.sidebar:
     )
     
     st.markdown("---")
-    st.info("💡 **Petunjuk:** Setiap visualisasi ditampilkan dalam layout penuh (full-width) dari kiri ke kanan. Visualisasi interaktif mendukung hover, zoom, dan seleksi.")
+    st.info("**Petunjuk:** Setiap visualisasi ditampilkan dalam layout penuh (full-width) dari kiri ke kanan. Visualisasi interaktif mendukung hover, zoom, dan seleksi.")
 
 
 # ==============================================================================
@@ -770,14 +770,14 @@ with tab_macro:
     # 1. Peta Geografis Indonesia (Pilihan Choropleth / Simbol Proporsional)
     with st.container(border=True):
         render_section_header(
-            "🗺️ Peta Geografis IHK Indonesia (OpenStreetMap Basemap)", 
+            "Peta Geografis IHK Indonesia (OpenStreetMap Basemap)", 
             "Eksplorasi spasial sebaran Indeks Harga Konsumen (IHK) 38 provinsi di Indonesia. Gunakan selektor di bawah untuk beralih antara Peta Choropleth (poligon wilayah) dan Peta Simbol Proporsional (bubble map terkalibrasi)."
         )
         
         # Poin Perbaikan 2: Toggle Tampilan Alternatif Peta Geospasial
         map_type = st.radio(
             "Pilih Jenis Visualisasi Peta Geospasial:",
-            options=["🗺️ Peta Choropleth (Area Poligon)", "📍 Peta Simbol Proporsional (Proportional Symbol Map)"],
+            options=["Peta Choropleth (Area Poligon)", "Peta Simbol Proporsional (Proportional Symbol Map)"],
             horizontal=True,
             help="Beralih antara peta tematik batas wilayah (Choropleth) dan peta sebaran lingkaran proporsional berdasarkan nilai IHK."
         )
@@ -865,9 +865,9 @@ with tab_macro:
                 hovertemplate=(
                     '<span style="font-size:14px; font-weight:800; color:#FDF5EC;">%{customdata[0]}</span><br>' +
                     '<span style="color:rgba(253,245,236,0.4);">' + '―'*26 + '</span><br>' +
-                    '📊 Rata-rata IHK: <b>%{customdata[3]}</b><br>' +
-                    '🏷️ Klasifikasi: <b>%{customdata[1]}</b><br>' +
-                    f'⚖️ Selisih vs Nasional: <b>%{{customdata[2]}}</b> (Nasional: {mean_ihk_nasional:.2f})' +
+                    'Rata-rata IHK: <b>%{customdata[3]}</b><br>' +
+                    'Klasifikasi: <b>%{customdata[1]}</b><br>' +
+                    f'Selisih vs Nasional: <b>%{{customdata[2]}}</b> (Nasional: {mean_ihk_nasional:.2f})' +
                     '<extra></extra>'
                 )
             ))
@@ -883,12 +883,12 @@ with tab_macro:
                     lat=[sel_coord['lat']],
                     lon=[sel_coord['lon']],
                     mode='markers+text',
-                    text=[f"<b>⭐ {selected_prov}</b>"],
+                    text=[f"<b>{selected_prov}</b>"],
                     textposition="top center",
                     textfont=dict(family="Plus Jakarta Sans", size=13, color="#FFF9F0"),
                     marker=dict(size=16, color="#FFF9F0"),
                     hoverinfo='text',
-                    hovertext=[f"<b>⭐ {selected_prov} (Provinsi Sorotan)</b><br>Rata-rata IHK 2025: <b>{sel_val:.2f}</b><br>Selisih thd Nasional: <b>{diff_str}</b>"],
+                    hovertext=[f"<b>{selected_prov} (Provinsi Sorotan)</b><br>Rata-rata IHK 2025: <b>{sel_val:.2f}</b><br>Selisih thd Nasional: <b>{diff_str}</b>"],
                     showlegend=False
                 ))
         else:
@@ -932,10 +932,10 @@ with tab_macro:
                 hovertemplate=(
                     '<span style="font-size:14px; font-weight:800; color:#FDF5EC;">%{customdata[0]}</span><br>' +
                     '<span style="color:rgba(253,245,236,0.4);">' + '―'*26 + '</span><br>' +
-                    '📊 Rata-rata IHK: <b>%{customdata[3]}</b><br>' +
-                    '🏷️ Klasifikasi: <b>%{customdata[1]}</b><br>' +
-                    f'⚖️ Selisih vs Nasional: <b>%{{customdata[2]}}</b> (Nasional: {mean_ihk_nasional:.2f})<br>' +
-                    '⭕ Ukuran Simbol: <b>Proporsional terhadap IHK</b>' +
+                    'Rata-rata IHK: <b>%{customdata[3]}</b><br>' +
+                    'Klasifikasi: <b>%{customdata[1]}</b><br>' +
+                    f'Selisih vs Nasional: <b>%{{customdata[2]}}</b> (Nasional: {mean_ihk_nasional:.2f})<br>' +
+                    'Ukuran Simbol: <b>Proporsional terhadap IHK</b>' +
                     '<extra></extra>'
                 ),
                 showlegend=False
@@ -953,7 +953,7 @@ with tab_macro:
                     lat=[sel_coord['lat']],
                     lon=[sel_coord['lon']],
                     mode='markers+text',
-                    text=[f"<b>⭐ {selected_prov}</b>"],
+                    text=[f"<b>{selected_prov}</b>"],
                     textposition="top center",
                     textfont=dict(family="Plus Jakarta Sans", size=13, color="#F5D6A8"),
                     marker=dict(
@@ -962,7 +962,7 @@ with tab_macro:
                         line=dict(color="#F5D6A8", width=3.0)
                     ),
                     hoverinfo='text',
-                    hovertext=[f"<b>⭐ {selected_prov} (Provinsi Sorotan)</b><br>Rata-rata IHK 2025: <b>{sel_val:.2f}</b><br>Selisih thd Nasional: <b>{diff_str}</b>"],
+                    hovertext=[f"<b>{selected_prov} (Provinsi Sorotan)</b><br>Rata-rata IHK 2025: <b>{sel_val:.2f}</b><br>Selisih thd Nasional: <b>{diff_str}</b>"],
                     showlegend=False
                 ))
             
@@ -981,7 +981,7 @@ with tab_macro:
         df_dl_peta = geo_df[['Provinsi', 'IHK']].copy()
         df_dl_peta['Klasifikasi'] = [kat for _, kat, _, _ in custom_data_list]
         df_dl_peta['Selisih_vs_Nasional'] = [diff for _, _, diff, _ in custom_data_list]
-        render_download_button(df_dl_peta, "data_peta_geospasial_ihk_2025.csv", "📥 Unduh Data Peta (CSV)", "dl_peta")
+        render_download_button(df_dl_peta, "data_peta_geospasial_ihk_2025.csv", "Unduh Data Peta (CSV)", "dl_peta")
         
         render_takeaway(
             "Interpretasi Peta Spasial", 
@@ -990,7 +990,7 @@ with tab_macro:
 
     # 2. Clustered Heatmap (Full Width)
     with st.container(border=True):
-        render_section_header("🧬 Clustered Heatmap (38 Provinsi vs 11 Kelompok Pengeluaran)", "Memetakan secara komprehensif spektrum harga konsumen pada seluruh kelompok kebutuhan hidup di 38 provinsi.")
+        render_section_header("Clustered Heatmap (38 Provinsi vs 11 Kelompok Pengeluaran)", "Memetakan secara komprehensif spektrum harga konsumen pada seluruh kelompok kebutuhan hidup di 38 provinsi.")
         
         sort_option = st.selectbox(
             "Urutkan Baris Provinsi Berdasarkan:",
@@ -1015,7 +1015,7 @@ with tab_macro:
         else:
             df_heat = df_heat.sort_index(ascending=False)
 
-        custom_y_labels = [f"👉 <b>{p}</b> (Fokus)" if p == selected_prov else p for p in df_heat.index]
+        custom_y_labels = [f"<b>{p}</b> (Fokus)" if p == selected_prov else p for p in df_heat.index]
         fig_heat = px.imshow(
             df_heat,
             labels=dict(x="Kelompok Pengeluaran", y="Provinsi", color="IHK"),
@@ -1043,13 +1043,13 @@ with tab_macro:
         # Poin Perbaikan 5: Atribusi Sumber Data BPS & Tombol Unduh Data Heatmap
         render_source_caption()
         df_dl_heat = df_heat.copy().reset_index().rename(columns={'index': 'Provinsi'})
-        render_download_button(df_dl_heat, "data_clustered_heatmap_ihk_2025.csv", "📥 Unduh Data Heatmap (CSV)", "dl_heat")
+        render_download_button(df_dl_heat, "data_clustered_heatmap_ihk_2025.csv", "Unduh Data Heatmap (CSV)", "dl_heat")
         
         render_takeaway("Clustered Heatmap", "Kelompok Makanan, Minuman & Tembakau serta Perawatan Pribadi menunjukkan kontras warna crimson paling pekat di sebagian besar provinsi, membuktikan kedua sektor ini menjadi penyumbang utama tekanan kenaikan harga nasional.")
 
     # 3. Horizontal Ranking Bar Chart (Full Width)
     with st.container(border=True):
-        render_section_header("📊 Peringkat IHK Rata-Rata Seluruh Provinsi", "Peringkat lengkap 38 provinsi diurutkan dari IHK terendah ke tertinggi. Batang peach terang menandai provinsi sorotan. Garis putus-putus emas menunjukkan benchmark rata-rata nasional.")
+        render_section_header("Peringkat IHK Rata-Rata Seluruh Provinsi", "Peringkat lengkap 38 provinsi diurutkan dari IHK terendah ke tertinggi. Batang peach terang menandai provinsi sorotan. Garis putus-putus emas menunjukkan benchmark rata-rata nasional.")
         
         df_rank = pd.DataFrame({'Provinsi': prov_mean_series.index, 'IHK': prov_mean_series.values}).sort_values(by='IHK', ascending=True)
         bar_colors = ["#E8908A" if p == selected_prov else "rgba(232, 144, 138, 0.45)" for p in df_rank['Provinsi']]
@@ -1078,13 +1078,13 @@ with tab_macro:
         render_source_caption()
         df_dl_rank = df_rank.copy().reset_index(drop=True)
         df_dl_rank['Peringkat'] = range(1, len(df_dl_rank) + 1)
-        render_download_button(df_dl_rank, "data_peringkat_ihk_2025.csv", "📥 Unduh Data Peringkat (CSV)", "dl_rank")
+        render_download_button(df_dl_rank, "data_peringkat_ihk_2025.csv", "Unduh Data Peringkat (CSV)", "dl_rank")
         
         render_takeaway("Peringkat Agregat", f"Papua Tengah memuncaki indeks tertinggi ({highest_prov_val:.2f}) sementara Papua Pegunungan menempati peringkat terendah ({lowest_prov_val:.2f}). Provinsi fokus {selected_prov} berada di angka {prov_mean_series[selected_prov]:.2f}.")
 
     # 4. Dot Plot Sebaran IHK (Full Width)
     with st.container(border=True):
-        render_section_header("🎯 Sebaran Distribusi IHK 38 Provinsi (Dot Plot)", "Dispersi nilai 38 provinsi membentang melintasi garis patokan nasional untuk mengamati ketimpangan dan kepadatan sebaran.")
+        render_section_header("Sebaran Distribusi IHK 38 Provinsi (Dot Plot)", "Dispersi nilai 38 provinsi membentang melintasi garis patokan nasional untuk mengamati ketimpangan dan kepadatan sebaran.")
         
         fig_dot = go.Figure()
         fig_dot.add_trace(go.Scatter(
@@ -1102,7 +1102,7 @@ with tab_macro:
             x=[sel_val],
             y=[1.0],
             mode='markers+text',
-            text=[f"⭐ {selected_prov} ({sel_val:.2f})"],
+            text=[f"{selected_prov} ({sel_val:.2f})"],
             textposition="top center",
             textfont=dict(family="Plus Jakarta Sans", size=12, color="#FDF5EC"),
             marker=dict(size=20, color="#E8908A", symbol="star", line=dict(color="#FDF5EC", width=2)),
@@ -1129,13 +1129,13 @@ with tab_macro:
             'IHK_RataRata_2025': prov_mean_series.values,
             'Deviasi_vs_Nasional': prov_mean_series.values - mean_ihk_nasional
         })
-        render_download_button(df_dl_dot, "data_sebaran_dotplot_ihk_2025.csv", "📥 Unduh Data Sebaran (CSV)", "dl_dot")
+        render_download_button(df_dl_dot, "data_sebaran_dotplot_ihk_2025.csv", "Unduh Data Sebaran (CSV)", "dl_dot")
         
         render_takeaway("Sebaran Dispersi", "Kepadatan provinsi paling tinggi terkumpul pada rentang IHK 106,5 hingga 108,0. Titik-titik di luar rentang tersebut mencerminkan anomali regional yang membutuhkan intervensi stabilisasi pasokan pangan.")
 
     # 5. Kesimpulan Khusus Sub-Tema: Macro Overview (Full Width Card)
     render_conclusion_card(
-        "💡 Kesimpulan: Macro Overview & Disparitas Spasial",
+        "Kesimpulan: Macro Overview & Disparitas Spasial",
         "Sintesis komprehensif dinamika agregat tingkat harga 38 provinsi di Indonesia (Tahun Dasar 2022 = 100)",
         [
             {
@@ -1157,14 +1157,14 @@ with tab_multi:
     # 1. PCA Biplot (Optimalisasi 38 Subkelompok Komoditas)
     with st.container(border=True):
         render_section_header(
-            "🧬 PCA Biplot (Peta Reduksi 38 Dimensi Subkelompok Komoditas)", 
+            "PCA Biplot (Peta Reduksi 38 Dimensi Subkelompok Komoditas)", 
             f"Model dilatih pada 38 subkelompok komoditas · Sumbu X: PC1 ({var_exp[0]*100:.1f}% variansi) · Sumbu Y: PC2 ({var_exp[1]*100:.1f}% variansi). Titik bintang peach menandai provinsi fokus. Vektor panah menunjukkan arah pengaruh subkelompok pengeluaran."
         )
         
         # Poin Perbaikan 4: Pengaturan Loadings 38 Subkelompok Komoditas
         loading_view_mode = st.radio(
             "Pilihan Vektor Loadings Subkelompok:",
-            options=["🌟 10 Subkelompok Paling Berpengaruh (Top Loadings)", "📑 Seluruh 38 Subkelompok", "🚫 Sembunyikan Vektor"],
+            options=["10 Subkelompok Paling Berpengaruh (Top Loadings)", "Seluruh 38 Subkelompok", "Sembunyikan Vektor"],
             horizontal=True
         )
         
@@ -1195,12 +1195,12 @@ with tab_multi:
             y=[sel_pc2],
             mode='markers+text',
             name=f"Fokus: {selected_prov}",
-            text=[f"⭐ <b>{selected_prov}</b>"],
+            text=[f"<b>{selected_prov}</b>"],
             textposition="bottom center",
             textfont=dict(size=13, color="#FDF5EC", family="Plus Jakarta Sans"),
             marker=dict(size=24, color="#E8908A", symbol="star", line=dict(color="#FDF5EC", width=2.5)),
             hoverinfo='text',
-            hovertext=f"<b>⭐ {selected_prov}</b><br>PC1: {sel_pc1:.2f}, PC2: {sel_pc2:.2f}"
+            hovertext=f"<b>{selected_prov}</b><br>PC1: {sel_pc1:.2f}, PC2: {sel_pc2:.2f}"
         ))
         
         if "Sembunyikan" not in loading_view_mode:
@@ -1244,11 +1244,11 @@ with tab_multi:
         # Poin Perbaikan 5: Atribusi Sumber Data BPS & Tombol Unduh Data Skor PCA
         render_source_caption()
         df_dl_pca = df_pca.copy().reset_index().rename(columns={'index': 'Provinsi'})
-        render_download_button(df_dl_pca, "data_pca_biplot_2025.csv", "📥 Unduh Data Skor PCA (CSV)", "dl_pca")
+        render_download_button(df_dl_pca, "data_pca_biplot_2025.csv", "Unduh Data Skor PCA (CSV)", "dl_pca")
         
         render_takeaway("PCA Biplot 38 Variabel", f"Reduksi dimensi pada 38 subkelompok komoditas menghasilkan total variansi kumulatif {(var_exp[0]+var_exp[1])*100:.1f}%. PC1 mencerminkan polarisasi konsumsi modernitas rumah tangga & perawatan pribadi, sementara PC2 memisahkan sektor pakaian & tekstil dari komoditas pangan pokok.")
         
-        with st.expander("📊 Lihat Detail Bobot Loadings Lengkap (38 Subkelompok Komoditas)"):
+        with st.expander("Lihat Detail Bobot Loadings Lengkap (38 Subkelompok Komoditas)"):
             pca_loadings_df = pd.DataFrame({
                 'Subkelompok Komoditas': df_sub.columns,
                 'Kelompok Induk': [sub_to_kel.get(s, '-') for s in df_sub.columns],
@@ -1264,7 +1264,7 @@ with tab_multi:
 
     # 2. Parallel Coordinates (Full Width)
     with st.container(border=True):
-        render_section_header("📈 Parallel Coordinates (Profil Pola Komparatif 11 Kelompok Pengeluaran)", "Setiap garis mewakili satu provinsi melintasi 11 kelompok pengeluaran makro. Garis putus-putus putih: rata-rata nasional. Garis tebal peach: provinsi fokus. Garis lain redup transparan.")
+        render_section_header("Parallel Coordinates (Profil Pola Komparatif 11 Kelompok Pengeluaran)", "Setiap garis mewakili satu provinsi melintasi 11 kelompok pengeluaran makro. Garis putus-putus putih: rata-rata nasional. Garis tebal peach: provinsi fokus. Garis lain redup transparan.")
         
         compare_prov = st.selectbox(
             "Bandingkan dengan Provinsi Lain:",
@@ -1294,7 +1294,7 @@ with tab_multi:
             x=short_kel, y=df_kelompok.mean(), mode='lines+markers',
             line=dict(color="#FDF5EC", width=2.5, dash="dot"),
             marker=dict(size=6, color="#FDF5EC"),
-            name="🇮🇩 Rata-Rata Nasional",
+            name="Rata-Rata Nasional",
             hoverinfo='text', hovertext=[f"<b>Rata-rata Nasional</b><br>{k}: {v:.2f}" for k, v in zip(short_kel, df_kelompok.mean())]
         ))
         
@@ -1303,7 +1303,7 @@ with tab_multi:
                 x=short_kel, y=df_kelompok.loc[compare_prov], mode='lines+markers',
                 line=dict(color="#F5D6A8", width=3.5),
                 marker=dict(size=7, color="#F5D6A8"),
-                name=f"📍 {compare_prov}",
+                name=f"{compare_prov}",
                 hoverinfo='text', hovertext=[f"<b>{compare_prov}</b><br>{k}: {v:.2f}" for k, v in zip(short_kel, df_kelompok.loc[compare_prov])]
             ))
             
@@ -1311,8 +1311,8 @@ with tab_multi:
             x=short_kel, y=df_kelompok.loc[selected_prov], mode='lines+markers',
             line=dict(color="#E8908A", width=4.5),
             marker=dict(size=9, color="#E8908A", line=dict(color="#FDF5EC", width=1.8)),
-            name=f"⭐ {selected_prov} (Fokus)",
-            hoverinfo='text', hovertext=[f"<b>⭐ {selected_prov}</b><br>{k}: {v:.2f}" for k, v in zip(short_kel, df_kelompok.loc[selected_prov])]
+            name=f"{selected_prov} (Fokus)",
+            hoverinfo='text', hovertext=[f"<b>{selected_prov}</b><br>{k}: {v:.2f}" for k, v in zip(short_kel, df_kelompok.loc[selected_prov])]
         ))
         
         fig_par.update_layout(
@@ -1330,13 +1330,13 @@ with tab_multi:
         # Poin Perbaikan 5: Atribusi Sumber Data BPS & Tombol Unduh Data Parallel Coordinates
         render_source_caption()
         df_dl_par = df_kelompok.copy().reset_index().rename(columns={'index': 'Provinsi'})
-        render_download_button(df_dl_par, "data_parallel_coordinates_2025.csv", "📥 Unduh Data Kelompok Pengeluaran (CSV)", "dl_par")
+        render_download_button(df_dl_par, "data_parallel_coordinates_2025.csv", "Unduh Data Kelompok Pengeluaran (CSV)", "dl_par")
         
         render_takeaway("Parallel Coordinates", f"Pola garis provinsi {selected_prov} memperlihatkan fluktuasi spesifik antar-11 kelompok pengeluaran. Kelompok dengan jarak terjauh dari benchmark nasional merupakan determinan inflasi lokal utama.")
 
     # 3. Kesimpulan Khusus Sub-Tema: Multivariate Analysis (Full Width Card)
     render_conclusion_card(
-        "💡 Kesimpulan: Multivariate Analysis & Reduksi Dimensi",
+        "Kesimpulan: Multivariate Analysis & Reduksi Dimensi",
         "Interpretasi reduksi dimensi subkelompok komoditas melalui PCA dan klasterisasi K-Means",
         [
             {
@@ -1369,7 +1369,7 @@ with tab_net:
 
     # 2. Force-Directed Graph (Full Width)
     with st.container(border=True):
-        render_section_header("🕸️ Force-Directed Graph (Jaringan Kemiripan Antarprovinsi)", f"Visualisasi graf fisika pegas (spring layout). Ukuran node proporsional terhadap koneksi (derajat). Garis peach tebal menunjukkan relasi langsung provinsi fokus ({selected_prov}).")
+        render_section_header("Force-Directed Graph (Jaringan Kemiripan Antarprovinsi)", f"Visualisasi graf fisika pegas (spring layout). Ukuran node proporsional terhadap koneksi (derajat). Garis peach tebal menunjukkan relasi langsung provinsi fokus ({selected_prov}).")
         
         edge_x, edge_y = [], []
         sel_edge_x, sel_edge_y = [], []
@@ -1422,7 +1422,7 @@ with tab_net:
             sx, sy = pos[selected_prov]
             fig_net.add_trace(go.Scatter(
                 x=[sx], y=[sy], mode='markers+text',
-                text=[f"⭐ <b>{selected_prov}</b>"], textposition="bottom center",
+                text=[f"<b>{selected_prov}</b>"], textposition="bottom center",
                 textfont=dict(size=13, color="#FDF5EC", family="Plus Jakarta Sans"),
                 marker=dict(size=26, color="#E8908A", symbol="star", line=dict(color="#FDF5EC", width=2.5)),
                 hoverinfo='skip'
@@ -1452,14 +1452,14 @@ with tab_net:
                 'Klaster_Provinsi_2': df_pca.loc[v, 'Cluster']
             })
         df_dl_edges = pd.DataFrame(edge_records) if edge_records else pd.DataFrame(columns=['Provinsi_1', 'Provinsi_2', 'Koefisien_Korelasi', 'Klaster_Provinsi_1', 'Klaster_Provinsi_2'])
-        render_download_button(df_dl_edges, f"data_network_edges_r{int(network_threshold*100)}_2025.csv", "📥 Unduh Data Relasi Jaringan (CSV)", "dl_net")
+        render_download_button(df_dl_edges, f"data_network_edges_r{int(network_threshold*100)}_2025.csv", "Unduh Data Relasi Jaringan (CSV)", "dl_net")
         
         render_takeaway("Topologi Network", f"Pada ambang r = {network_threshold:.2f}, provinsi fokus {selected_prov} memiliki {len(sel_neighbors)} tetangga korelasi langsung. Struktur jaringan memperlihatkan inti terpadu berderajat tinggi dan pulau terisolasi berderajat 0.")
 
     # 3. Poin Perbaikan 3: Chart Adjacency Matrix (PERSIS DI BAWAH GRAF FORCE-DIRECTED)
     with st.container(border=True):
         render_section_header(
-            "⏹️ Matriks Adjacency (Koneksi Korelasi Antarprovinsi)", 
+            "Matriks Adjacency (Koneksi Korelasi Antarprovinsi)", 
             f"Tampilan alternatif data berjaring memvisualisasikan matriks korelasi penuh (corr_matrix) antarprovinsi berbasis 38 subkelompok. Menunjukkan struktur blok homogenitas intra-klaster dan asimetri antar-wilayah."
         )
         
@@ -1522,24 +1522,24 @@ with tab_net:
         # Poin Perbaikan 5: Atribusi Sumber Data BPS & Tombol Unduh Data Matriks Adjacency
         render_source_caption()
         df_dl_adj = display_corr.copy().reset_index().rename(columns={'index': 'Provinsi'})
-        render_download_button(df_dl_adj, "data_matriks_adjacency_korelasi_2025.csv", "📥 Unduh Data Matriks Adjacency (CSV)", "dl_adj")
+        render_download_button(df_dl_adj, "data_matriks_adjacency_korelasi_2025.csv", "Unduh Data Matriks Adjacency (CSV)", "dl_adj")
         
         render_takeaway("Matriks Adjacency", "Blok-blok diagonal yang menyala terang membuktikan tingginya homogenitas pola harga di dalam klaster yang sama, sedangkan area gelap menegaskan asimetri hubungan antar-klaster.")
 
     # 4. Profil Kemiripan & Tabel Tetangga (Full Width Layout, Tidak Terbelah Sempit)
     with st.container(border=True):
-        render_section_header(f"👥 Profil Kemiripan Spesifik: {selected_prov}", "Koefisien korelasi kemiripan pola pengeluaran terhadap provinsi fokus. Menampilkan provinsi paling serupa dan paling berbeda secara penuh dari kiri ke kanan.")
+        render_section_header(f"Profil Kemiripan Spesifik: {selected_prov}", "Koefisien korelasi kemiripan pola pengeluaran terhadap provinsi fokus. Menampilkan provinsi paling serupa dan paling berbeda secara penuh dari kiri ke kanan.")
         
         sim_series = corr_matrix[selected_prov].drop(selected_prov).sort_values(ascending=False)
         
         view_sim_choice = st.radio(
             "Pilih Tampilan Tabel Profil:",
-            options=["🟢 8 Provinsi Paling Mirip (Korelasi Tertinggi)", "🔴 4 Provinsi Paling Berbeda (Korelasi Terendah)", "📑 Tampilkan Keduanya Berurutan"],
+            options=["8 Provinsi Paling Mirip (Korelasi Tertinggi)", "4 Provinsi Paling Berbeda (Korelasi Terendah)", "Tampilkan Keduanya Berurutan"],
             horizontal=True
         )
         
         if "Paling Mirip" in view_sim_choice or "Keduanya" in view_sim_choice:
-            st.write(f"**🟢 8 Provinsi Paling Mirip dengan {selected_prov} (Pola Pergerakan Paling Serupa):**")
+            st.write(f"**8 Provinsi Paling Mirip dengan {selected_prov} (Pola Pergerakan Paling Serupa):**")
             top_similar_df = pd.DataFrame({'Provinsi': sim_series.index[:8], 'Koefisien Korelasi (r)': sim_series.values[:8]})
             try:
                 st.dataframe(top_similar_df.style.format({'Koefisien Korelasi (r)': '{:.3f}'}).background_gradient(cmap='PuRd', subset=['Koefisien Korelasi (r)']), use_container_width=True, hide_index=True)
@@ -1547,7 +1547,7 @@ with tab_net:
                 st.dataframe(top_similar_df, use_container_width=True, hide_index=True)
                 
         if "Paling Berbeda" in view_sim_choice or "Keduanya" in view_sim_choice:
-            st.write(f"**🔴 4 Provinsi Paling Berbeda dengan {selected_prov} (Pola Pergerakan Paling Asimetris):**")
+            st.write(f"**4 Provinsi Paling Berbeda dengan {selected_prov} (Pola Pergerakan Paling Asimetris):**")
             least_similar_df = pd.DataFrame({'Provinsi': sim_series.index[-4:], 'Koefisien Korelasi (r)': sim_series.values[-4:]})
             try:
                 st.dataframe(least_similar_df.style.format({'Koefisien Korelasi (r)': '{:.3f}'}).background_gradient(cmap='OrRd', subset=['Koefisien Korelasi (r)']), use_container_width=True, hide_index=True)
@@ -1561,13 +1561,13 @@ with tab_net:
             'Provinsi_Mitra': sim_series.index,
             'Koefisien_Korelasi_r': sim_series.values.round(4)
         })
-        render_download_button(df_dl_sim, f"data_profil_kemiripan_{selected_prov.lower().replace(' ', '_')}.csv", "📥 Unduh Data Profil Kemiripan (CSV)", "dl_sim")
+        render_download_button(df_dl_sim, f"data_profil_kemiripan_{selected_prov.lower().replace(' ', '_')}.csv", "Unduh Data Profil Kemiripan (CSV)", "dl_sim")
         
         render_takeaway("Profil Kemiripan Pasangan", f"Mitra paling serupa dengan {selected_prov} adalah {sim_series.index[0]} (r = {sim_series.values[0]:.3f}), sedangkan provinsi dengan disparitas perilaku harga tertinggi adalah {sim_series.index[-1]} (r = {sim_series.values[-1]:.3f}).")
 
     # 5. Kesimpulan Khusus Sub-Tema: Network Analysis (Full Width Card)
     render_conclusion_card(
-        "💡 Kesimpulan: Network Analysis & Struktur Asimetri",
+        "Kesimpulan: Network Analysis & Struktur Asimetri",
         "Rangkuman relasi kemiripan dan konektivitas harga antarprovinsi melalui graf network dan matriks adjacency",
         [
             {
@@ -1588,13 +1588,13 @@ with tab_net:
 with tab_hier:
     # Breadcrumb Navigation (Full Width)
     st.html(f'''<div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); border-radius: 12px; padding: 14px 22px; font-size: 0.94rem; font-weight: 600; color: #FDF5EC; margin-bottom: 22px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <span>🏠 Indonesia (Nasional)</span>
-        <span style="opacity: 0.5;">➔</span>
-        <span style="color: #F5D6A8;">📍 {selected_prov} (Provinsi Sorotan)</span>
-        <span style="opacity: 0.5;">➔</span>
-        <span style="color: #E8908A;">🏷️ 11 Kelompok Pengeluaran</span>
-        <span style="opacity: 0.5;">➔</span>
-        <span style="color: #FDF5EC;">📦 38 Subkelompok Komoditas</span>
+        <span>Indonesia (Nasional)</span>
+        <span style="opacity: 0.5;">&rarr;</span>
+        <span style="color: #F5D6A8;">{selected_prov} (Provinsi Sorotan)</span>
+        <span style="opacity: 0.5;">&rarr;</span>
+        <span style="color: #E8908A;">11 Kelompok Pengeluaran</span>
+        <span style="opacity: 0.5;">&rarr;</span>
+        <span style="color: #FDF5EC;">38 Subkelompok Komoditas</span>
     </div>''')
     
     # Poin Perbaikan 1: Dua visualisasi Sunburst yang terpisah (Nasional & Provinsi)
@@ -1612,8 +1612,8 @@ with tab_hier:
     # 1. Sunburst Chart Tingkat Nasional (Root: Indonesia)
     with st.container(border=True):
         render_section_header(
-            "☀️ 1. Sunburst Chart IHK Tingkat Nasional (Root: Indonesia)", 
-            "Diagram konsentris 3 level agregat nasional (Indonesia ➔ Kelompok ➔ Subkelompok). Ukuran sektor (values) merepresentasikan Bobot Diagram Timbang Pengeluaran (%), sedangkan warna sektor (color) merepresentasikan Nilai Rata-rata IHK Nasional 2025. Teks selalu berorientasi mendatar (horizontal)."
+            "1. Sunburst Chart IHK Tingkat Nasional (Root: Indonesia)", 
+            "Diagram konsentris 3 level agregat nasional (Indonesia -> Kelompok -> Subkelompok). Ukuran sektor (values) merepresentasikan Bobot Diagram Timbang Pengeluaran (%), sedangkan warna sektor (color) merepresentasikan Nilai Rata-rata IHK Nasional 2025. Teks selalu berorientasi mendatar (horizontal)."
         )
         
         fig_sun_nas = px.sunburst(
@@ -1628,9 +1628,9 @@ with tab_hier:
             insidetextorientation='horizontal',
             hovertemplate=(
                 '<b>%{label}</b><br>' +
-                '🏷️ Hierarki Induk: <b>%{parent}</b><br>' +
-                '📦 Bobot Diagram Timbang: <b>%{value:.2f}%</b><br>' +
-                '📈 Rata-rata IHK Nasional: <b>%{color:.2f}</b><br>' +
+                'Hierarki Induk: <b>%{parent}</b><br>' +
+                'Bobot Diagram Timbang: <b>%{value:.2f}%</b><br>' +
+                'Rata-rata IHK Nasional: <b>%{color:.2f}</b><br>' +
                 '<extra></extra>'
             )
         )
@@ -1649,14 +1649,14 @@ with tab_hier:
         )
         st.plotly_chart(fig_sun_nas, use_container_width=True)
         render_source_caption()
-        render_download_button(df_nasional, "data_sunburst_nasional_3level_2025.csv", "📥 Unduh Data Sunburst Nasional (CSV)", "dl_sun_nas")
+        render_download_button(df_nasional, "data_sunburst_nasional_3level_2025.csv", "Unduh Data Sunburst Nasional (CSV)", "dl_sun_nas")
         render_takeaway("Sunburst Nasional", "Pada agregat nasional, sektor Makanan, Minuman & Tembakau mendominasi pangsa konsumsi (~33,7%) dengan rona warna pekat yang mencerminkan tekanan harga bahan makanan pokok di seluruh nusantara.")
 
     # 2. Sunburst Chart Tingkat Provinsi Terpilih (Root: selected_prov)
     with st.container(border=True):
         render_section_header(
-            f"☀️ 2. Sunburst Chart IHK Provinsi: {selected_prov} (Root: {selected_prov})", 
-            f"Diagram konsentris 3 level spesifik provinsi (Root: {selected_prov} ➔ Kelompok ➔ Subkelompok). Ukuran sektor (values) merepresentasikan Bobot Diagram Timbang (%), sedangkan warna sektor (color) merepresentasikan IHK 2025 Provinsi {selected_prov}. Teks selalu berorientasi mendatar (horizontal)."
+            f"2. Sunburst Chart IHK Provinsi: {selected_prov} (Root: {selected_prov})", 
+            f"Diagram konsentris 3 level spesifik provinsi (Root: {selected_prov} -> Kelompok -> Subkelompok). Ukuran sektor (values) merepresentasikan Bobot Diagram Timbang (%), sedangkan warna sektor (color) merepresentasikan IHK 2025 Provinsi {selected_prov}. Teks selalu berorientasi mendatar (horizontal)."
         )
         
         fig_sun_prov = px.sunburst(
@@ -1671,9 +1671,9 @@ with tab_hier:
             insidetextorientation='horizontal',
             hovertemplate=(
                 '<b>%{label}</b><br>' +
-                '🏷️ Hierarki Induk: <b>%{parent}</b><br>' +
-                '📦 Bobot Diagram Timbang: <b>%{value:.2f}%</b><br>' +
-                f'📈 IHK 2025 ({selected_prov}): <b>%{{color:.2f}}</b><br>' +
+                'Hierarki Induk: <b>%{parent}</b><br>' +
+                'Bobot Diagram Timbang: <b>%{value:.2f}%</b><br>' +
+                f'IHK 2025 ({selected_prov}): <b>%{{color:.2f}}</b><br>' +
                 '<extra></extra>'
             )
         )
@@ -1692,14 +1692,14 @@ with tab_hier:
         )
         st.plotly_chart(fig_sun_prov, use_container_width=True)
         render_source_caption()
-        render_download_button(df_provinsi, f"data_sunburst_{selected_prov.lower().replace(' ', '_')}_2025.csv", f"📥 Unduh Data Sunburst {selected_prov} (CSV)", "dl_sun_prov")
+        render_download_button(df_provinsi, f"data_sunburst_{selected_prov.lower().replace(' ', '_')}_2025.csv", f"Unduh Data Sunburst {selected_prov} (CSV)", "dl_sun_prov")
         render_takeaway(f"Sunburst {selected_prov}", f"Struktur konsentris {selected_prov} memperlihatkan variasi harga spesifik daerah. Subkelompok dengan warna crimson paling kontras mengindikasikan komoditas pemicu inflasi lokal utama di {selected_prov}.")
 
     # 3. Treemap Chart (Komposisi Proporsi Spasial 3 Level)
     with st.container(border=True):
         render_section_header(
-            f"🗺️ 3. Treemap Chart (Komposisi Proporsi Spasial 3 Level Hierarki IHK: {selected_prov})", 
-            f"Hierarki persegi proporsional 3 level (Root: {selected_prov} ➔ Kelompok ➔ Subkelompok). Luas kotak (values) mencerminkan Bobot Diagram Timbang (%), sedangkan rona warna (color) mencerminkan Nilai IHK 2025. Klik kotak untuk zoom-in ke rincian komoditas."
+            f"3. Treemap Chart (Komposisi Proporsi Spasial 3 Level Hierarki IHK: {selected_prov})", 
+            f"Hierarki persegi proporsional 3 level (Root: {selected_prov} -> Kelompok -> Subkelompok). Luas kotak (values) mencerminkan Bobot Diagram Timbang (%), sedangkan rona warna (color) mencerminkan Nilai IHK 2025. Klik kotak untuk zoom-in ke rincian komoditas."
         )
         
         fig_tree = px.treemap(
@@ -1713,9 +1713,9 @@ with tab_hier:
         fig_tree.update_traces(
             hovertemplate=(
                 '<b>%{label}</b><br>' +
-                '🏷️ Hierarki Induk: <b>%{parent}</b><br>' +
-                '📦 Bobot Diagram Timbang: <b>%{value:.2f}%</b><br>' +
-                '📈 Rata-rata IHK 2025: <b>%{color:.2f}</b><br>' +
+                'Hierarki Induk: <b>%{parent}</b><br>' +
+                'Bobot Diagram Timbang: <b>%{value:.2f}%</b><br>' +
+                'Rata-rata IHK 2025: <b>%{color:.2f}</b><br>' +
                 '<extra></extra>'
             )
         )
@@ -1734,12 +1734,12 @@ with tab_hier:
         )
         st.plotly_chart(fig_tree, use_container_width=True)
         render_source_caption()
-        render_download_button(df_provinsi, f"data_treemap_{selected_prov.lower().replace(' ', '_')}_2025.csv", "📥 Unduh Data Treemap (CSV)", "dl_tree")
+        render_download_button(df_provinsi, f"data_treemap_{selected_prov.lower().replace(' ', '_')}_2025.csv", "Unduh Data Treemap (CSV)", "dl_tree")
         render_takeaway("Treemap Proporsi Spasial 3 Level", f"Luas area kotak menunjukkan proporsi bobot konsumsi rumah tangga di {selected_prov}. Komoditas esensial seperti Makanan Pokok (25,2%) dan Energi Rumah Tangga menduduki proporsi ruang terluas dengan rona warna pekat.")
 
     # 4. Kesimpulan Khusus Sub-Tema: Hierarchical Drill-Down (Full Width Card)
     render_conclusion_card(
-        "💡 Kesimpulan: Hierarchical Drill-Down & Disparitas Subkelompok",
+        "Kesimpulan: Hierarchical Drill-Down & Disparitas Subkelompok",
         "Penelusuran akar pembentukan indeks dari level makro ke subkelompok komoditas mikro pada 3 level hierarki",
         [
             {
@@ -1758,7 +1758,7 @@ with tab_hier:
 # 9. SECTION INSIGHT & KESIMPULAN UTAMA DASHBOARD (FULL-WIDTH, PURE HTML)
 # ==============================================================================
 render_conclusion_card(
-    "💡 Kesimpulan Utama & Sintesis Eksekutif:",
+    "Kesimpulan Utama & Sintesis Eksekutif:",
     "Menjawab Pertanyaan Riset Utama: Apakah pola perubahan harga konsumen di Indonesia memiliki karakteristik yang sama di setiap provinsi?",
     [
         {
