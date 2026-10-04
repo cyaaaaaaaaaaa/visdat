@@ -376,6 +376,54 @@ div[data-baseweb="tab-highlight"] {
     color: #FDF5EC !important;
     font-weight: 600;
 }
+
+/* ==============================================================================
+   RESPONSIVITAS UNTUK LAYAR HP (MOBILE-FRIENDLY DEVICES)
+   ============================================================================== */
+@media screen and (max-width: 768px) {
+    /* Menyesuaikan padding utama agar tidak memakan ruang di layar kecil */
+    div.block-container, .main .block-container, [data-testid="stMainBlockContainer"] {
+        padding-top: 7rem !important; /* Memberi ruang lebih untuk header yang menumpuk di HP */
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* Mengubah susunan Sticky Header menjadi atas-bawah (stacking) */
+    .sticky-stis-header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 15px 10px 45px; /* Sisakan ruang 45px di kiri untuk tombol sidebar */
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    /* Memperkecil teks di header agar tidak bertabrakan */
+    .stis-inst { font-size: 0.75rem; }
+    .stis-sub { font-size: 0.6rem; }
+    
+    .identity-badge {
+        padding: 4px 10px;
+        flex-wrap: wrap;
+    }
+    .badge-item { font-size: 0.7rem; }
+
+    /* Memperkecil ukuran font pada KPI Card */
+    .kpi-value { font-size: 1.6rem; }
+
+    /* Memastikan Tab Navigasi bisa digeser ke kanan-kiri (scrollable) di HP */
+    div[data-testid="stTabs"] [role="tablist"] {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        justify-content: flex-start !important;
+        padding-bottom: 5px;
+    }
+    
+    div[data-testid="stTabs"] button[data-baseweb="tab"] {
+        flex: 0 0 auto !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+}
 </style>""", unsafe_allow_html=True)
 
 # Render Sticky STIS Header (Menetap di bagian atas saat di-scroll)
@@ -1589,6 +1637,7 @@ with tab_hier:
             hover_data={'Bobot_Pengeluaran': ':.2f', 'IHK_RataRata_2025': ':.2f'}
         )
         fig_sun.update_traces(
+            insidetextorientation='horizontal',
             hovertemplate=(
                 '<b>%{label}</b><br>' +
                 '🏷️ Hierarki Induk: <b>%{parent}</b><br>' +
