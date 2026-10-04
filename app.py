@@ -13,7 +13,7 @@ import json
 
 # ==============================================================================
 # 0. PEMUATAN LOGO STIS
-# =============================================================================
+# ==============================================================================
 logo_path = Path(__file__).parent / "logo stis.png"
 if logo_path.exists():
     with open(logo_path, "rb") as _f:
@@ -45,7 +45,11 @@ h1, h2, h3, h4, h5, .brand-title {
     letter-spacing: -0.02em;
 }
 
-
+/* 1. Menyembunyikan header default Streamlit */
+header, [data-testid="stHeader"] {
+    visibility: hidden !important;
+    height: 0px !important;
+}
 
 /* Main Page Background */
 .stApp {
@@ -374,6 +378,27 @@ div[data-baseweb="tab-highlight"] {
 }
 </style>""", unsafe_allow_html=True)
 
+# Render Sticky STIS Header (Menetap di bagian atas saat di-scroll)
+st.markdown(f"""
+<div class="sticky-stis-header">
+    <div class="sticky-header-left">
+        <img src="data:image/png;base64,{logo_stis_b64}" class="stis-logo-img" alt="Logo Politeknik Statistika STIS" />
+        <div class="stis-titles">
+            <span class="stis-inst">POLITEKNIK STATISTIKA STIS</span>
+            <span class="stis-sub">Visualisasi Data (VISDAT) · Proyek Akhir</span>
+        </div>
+    </div>
+    <div class="sticky-header-right">
+        <div class="identity-badge">
+            <span class="badge-item name"><span class="badge-icon">👤</span> <strong>Syadza Khumairah Akmul</strong></span>
+            <span class="badge-divider">•</span>
+            <span class="badge-item nim"><span class="badge-icon">🆔</span> <strong>222313387</strong></span>
+            <span class="badge-divider">•</span>
+            <span class="badge-item kelas"><span class="badge-icon">🏛️</span> <strong>3SD1</strong></span>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # ==============================================================================
