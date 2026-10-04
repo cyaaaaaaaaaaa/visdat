@@ -1,0 +1,44 @@
+No,Kolom,Kelompok,Subkelompok
+1,Makanan,"Makanan, Minuman dan Tembakau",Makanan
+2,Minuman yang Tidak Beralkohol,"Makanan, Minuman dan Tembakau",Minuman yang Tidak Beralkohol
+3,Minuman Beralkohol,"Makanan, Minuman dan Tembakau",Minuman Beralkohol
+4,Rokok dan Tembakau,"Makanan, Minuman dan Tembakau",Rokok dan Tembakau
+5,Pakaian,Pakaian dan Alas Kaki,Pakaian
+6,Alas Kaki,Pakaian dan Alas Kaki,Alas Kaki
+7,Sewa dan Kontrak Rumah,"Perumahan, Air, Listrik dan Bahan Bakar Rumah",Sewa dan Kontrak Rumah
+8,"Pemeliharaan, Perbaikan dan Keamanan","Perumahan, Air, Listrik dan Bahan Bakar Rumah","Pemeliharaan, Perbaikan dan Keamanan"
+9,Penyediaan Air dan Layanan Perumahan Lainnya,"Perumahan, Air, Listrik dan Bahan Bakar Rumah",Penyediaan Air dan Layanan Perumahan Lainnya
+10,Listrik dan Bahan Bakar Rumah Tangga,"Perumahan, Air, Listrik dan Bahan Bakar Rumah",Listrik dan Bahan Bakar Rumah Tangga
+11,"Furnitur, Perlengkapan dan Karpet","Perlengkapan, Peralatan dan Pemeliharaan Rutin Rumah Tangga","Furnitur, Perlengkapan dan Karpet"
+12,Tekstil Rumah Tangga,"Perlengkapan, Peralatan dan Pemeliharaan Rutin Rumah Tangga",Tekstil Rumah Tangga
+13,Peralatan Rumah Tangga,"Perlengkapan, Peralatan dan Pemeliharaan Rutin Rumah Tangga",Peralatan Rumah Tangga
+14,Barang Pecah Belah dan Peralatan Makan Minum,"Perlengkapan, Peralatan dan Pemeliharaan Rutin Rumah Tangga",Barang Pecah Belah dan Peralatan Makan Minum
+15,Peralatan dan Perlengkapan Perumahan dan Kebun,"Perlengkapan, Peralatan dan Pemeliharaan Rutin Rumah Tangga",Peralatan dan Perlengkapan Perumahan dan Kebun
+16,Barang dan Layanan untuk Pemeliharaan Rumah Tangga Rutin,"Perlengkapan, Peralatan dan Pemeliharaan Rutin Rumah Tangga",Barang dan Layanan untuk Pemeliharaan Rumah Tangga Rutin
+17,Obat-obatan dan Produk Kesehatan,Kesehatan,Obat-obatan dan Produk Kesehatan
+18,Jasa Rawat Jalan,Kesehatan,Jasa Rawat Jalan
+19,Jasa Rawat Inap,Kesehatan,Jasa Rawat Inap
+20,Jasa Kesehatan Lainnya,Kesehatan,Jasa Kesehatan Lainnya
+21,Pembelian Kendaraan,Transportasi,Pembelian Kendaraan
+22,Pengoperasian Peralatan Transportasi Pribadi,Transportasi,Pengoperasian Peralatan Transportasi Pribadi
+23,Jasa Angkutan Penumpang,Transportasi,Jasa Angkutan Penumpang
+24,Jasa Pengiriman Barang,Transportasi,Jasa Pengiriman Barang
+25,Peralatan Informasi dan Komunikasi,"Informasi, Komunikasi dan Jasa Keuangan",Peralatan Informasi dan Komunikasi
+26,Layanan Informasi dan Komunikasi,"Informasi, Komunikasi dan Jasa Keuangan",Layanan Informasi dan Komunikasi
+27,Asuransi,"Informasi, Komunikasi dan Jasa Keuangan",Asuransi
+28,Jasa Keuangan,"Informasi, Komunikasi dan Jasa Keuangan",Jasa Keuangan
+29,Barang Rekreasi Tahan Lama,"Rekreasi, Olahraga dan Budaya",Barang Rekreasi Tahan Lama
+30,Barang Rekreasi Lainnya dan Olahraga,"Rekreasi, Olahraga dan Budaya",Barang Rekreasi Lainnya dan Olahraga
+31,Layanan Rekreasi dan Olahraga,"Rekreasi, Olahraga dan Budaya",Layanan Rekreasi dan Olahraga
+32,Perlengkapan Kebudayaan,"Rekreasi, Olahraga dan Budaya",Perlengkapan Kebudayaan
+33,Layanan Kebudayaan,"Rekreasi, Olahraga dan Budaya",Layanan Kebudayaan
+34,"Koran, Buku dan Perlengkapan Sekolah","Rekreasi, Olahraga dan Budaya","Koran, Buku dan Perlengkapan Sekolah"
+35,Pendidikan Dasar dan Anak Usia Dini,Pendidikan,Pendidikan Dasar dan Anak Usia Dini
+36,Pendidikan Menengah,Pendidikan,Pendidikan Menengah
+37,Pendidikan Tinggi,Pendidikan,Pendidikan Tinggi
+38,Pendidikan Lainnya,Pendidikan,Pendidikan Lainnya
+39,Jasa Pelayanan Makanan dan Minuman,Penyediaan Makanan dan Minuman / Restoran,Jasa Pelayanan Makanan dan Minuman
+40,Perawatan Pribadi,Perawatan Pribadi dan Jasa Lainnya,Perawatan Pribadi
+41,Perawatan Pribadi Lainnya,Perawatan Pribadi dan Jasa Lainnya,Perawatan Pribadi Lainnya
+42,Perlindungan Sosial,Perawatan Pribadi dan Jasa Lainnya,Perlindungan Sosial
+43,Jasa Lainnya,Perawatan Pribadi dan Jasa Lainnya,Jasa Lainnya
